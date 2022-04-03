@@ -53,14 +53,14 @@ class UsersRepository {
 const test = async () => {
   const repo = new UsersRepository('users.json');
   
-  // await repo.create({
-  //   email: 'test@test.com', 
-  //   password: "mypassword", 
-  // });
+  await repo.create({
+    email: 'test@test.com', 
+    password: "mypassword", 
+  });
 
   // const user = await repo.getOne('28e9cc92');  
 
-  await repo.delete('28e9cc92');
+  // await repo.delete('28e9cc92');
 
   // console.log(user);
 }
