@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "email": "test@test.com",
+    "password": "password123",
+    "id": "d177fde5"
+  }
+]
