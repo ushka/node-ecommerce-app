@@ -3,5 +3,10 @@
     "email": "test@test.com",
     "password": "password123",
     "id": "d177fde5"
+  },
+  {
+    "email": "admin@test.com",
+    "password": "6516345d02e223111efd543c7f17554c71e4cf12f3c4e8b39d0a266f2e27cef2463274e793d90c05b0ed559958d876198ec931e6c0fc06569d2b42832c48f1df.c74376cf92d96fce",
+    "id": "394cea21"
   }
 ]
