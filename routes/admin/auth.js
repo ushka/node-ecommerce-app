@@ -12,23 +12,32 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', 
   [ 
-    check('email').trim().normalizeEmail().isEmail(), 
-    check('password').trim().isLength({ min: 6, max: 30 }), 
-    check('passwordconfirmation').trim().isLength({ min: 6, max: 30 }) 
+    check('email')
+      .trim()
+      .normalizeEmail()
+      .isEmail()
+      .custom(async (email) => {
+        const existingUser = await usersRepo.getOneBy({ email });
+        if(existingUser) {
+          throw new Error('Email already in use.');
+        }
+      }),
+    check('password')
+      .trim()
+      .isLength({ min: 6, max: 30 }), 
+    check('passwordconfirmation')
+      .trim()
+      .isLength({ min: 6, max: 30 })
+      .custom(async (passwordconfirmation, { req }) => {
+        if(passwordconfirmation !== req.body.password) {
+          throw new Error('Passwords do not match.');
+        }
+      })
   ], 
   async (req, res) => {
     const errors = validationResult(req);
     console.log(errors);
-    const { email, password, passwordconfirmation } = req.body;
-    
-    const existingUser = await usersRepo.getOneBy({ email });
-    if(existingUser) {
-      return res.send('Email already registered.')
-    }
-
-    if(password !== passwordconfirmation) {
-      return res.send('Passwords do not match.') 
-    }
+    const { email, password, passwordconfirmation } = req.body;            
 
     const user = await usersRepo.create({ email, password });
     req.session.userId = user.id;
