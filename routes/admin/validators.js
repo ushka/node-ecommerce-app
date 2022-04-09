@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const usersRepo = require('../../repositories');
+const usersRepo = require('../../repositories/users');
 
 module.exports = {
   requireEmail: check('email')
@@ -20,7 +20,7 @@ module.exports = {
   requirePasswordConfirmation: check('passwordconfirmation')
     .trim()
     .isLength({ min: 6, max: 30 })
-    .withMessage('Must be between 6 and 30 characters'),
+    .withMessage('Must be between 6 and 30 characters')
     .custom(async (passwordconfirmation, { req }) => {
       if(passwordconfirmation !== req.body.password) {
         throw new Error('Passwords do not match.');
