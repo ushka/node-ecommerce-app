@@ -33,6 +33,8 @@ module.exports = {
     .custom(async (passwordconfirmation, { req }) => {
       if(passwordconfirmation !== req.body.password) {
         throw new Error('Passwords do not match.');
+      } else {
+        return true;
       }
     }),
   requireEmailExists: check('email')
