@@ -18,10 +18,13 @@ router.get('/admin/products/new', (req, res) => {
 });
 
 router.post('/admin/products/new', 
-  [requireTitle, requirePrice],
   upload.single('image'),
+  [requireTitle, requirePrice],
   async (req, res) => {
     const errors = validationResult(errors);
+    if(!errors.isEmpty()) {
+      return res.send(productsNewTemplate({}));
+    }
     
     const image = req.file.buffer.toString('base64');
     const { title, price } = req.body;
